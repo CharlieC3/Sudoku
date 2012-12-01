@@ -1,27 +1,33 @@
-import java.util.Iterator;
-
-
 public class GraphProcessing implements GraphADT
 {
 
+	static int vertices = 0;
+	static int edges = 0;
+	
 	public void Vertex(int V) 
 	{
 		new Vertex(V);
+		vertices++;
 	}
 
 	public int Vertices() 
 	{
+		return vertices;
+	}
+
+	public int Edges() 
+	{
+
+		return edges;
+	}
+
+	public void addEdge(int V, int W) 
+	{
 		
-		return 0;
 	}
-
-	public int Edges() {
-
-		return 0;
-	}
-
-	public void addEdge(int V, int W) {
-
+	
+	public void addEdge(Vertex v, Vertex w)
+	{
 		
 	}
 
