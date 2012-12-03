@@ -6,7 +6,7 @@ public class GraphProcessing implements GraphADT
 	
 	public void Vertex(int V) 
 	{
-		new Vertex(V);
+		//new Vertex(V);
 		vertices++;
 	}
 
@@ -26,11 +26,13 @@ public class GraphProcessing implements GraphADT
 		
 	}
 	
+	/*
 	public void addEdge(Vertex v, Vertex w)
 	{
 		
 	}
-
+	*/
+	
 	@Override
 	public Iterable<Integer> Adjacent(int v) {
 		// TODO Auto-generated method stub
