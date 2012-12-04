@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class SudokuVertexNode 
 {
 	private SudokuVertexNode north, south, east, west;
-	private int sector, key, value;
+	private int key, value;
 	
 	private Color color;
 	private int xRow, yCol;
@@ -24,16 +24,6 @@ public class SudokuVertexNode
 		this.xRow = x;
 		this.yCol = y;
 		edges = new ArrayList<SudokuVertexNode>();
-	}
-	
-	public void setVertexValue(int v)
-	{
-		this.value = v;
-	}
-	
-	public int getVertexValue()
-	{
-		return this.value;
 	}
 	
 	public void setColor(Color c)
@@ -97,14 +87,6 @@ public class SudokuVertexNode
 
 	public void setWest(SudokuVertexNode west) {
 		this.west = west;
-	}
-
-	public int getSector() {
-		return sector;
-	}
-
-	public void setSector(int sector) {
-		this.sector = sector;
 	}
 
 	public int getKey() {
