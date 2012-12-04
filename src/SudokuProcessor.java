@@ -1,4 +1,4 @@
-public class SudokuProcessor implements SudokuGraphADT
+public class SudokuProcessor
 {
 
 	static int vertices = 0;
@@ -46,7 +46,6 @@ public class SudokuProcessor implements SudokuGraphADT
 		w.addEdge(v);
 	}
 
-	@Override
 	public SudokuVertexNode add(int x, int y) 
 	{
 		if (first == null)
