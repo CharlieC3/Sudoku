@@ -27,10 +27,6 @@ public class Run
 		}
 		
 		// Create edges for 9-blocks
-		
-		
-			
-
 	}
 
 }
