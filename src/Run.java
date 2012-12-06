@@ -4,9 +4,9 @@ public class Run
 	public static void main(String[] args) 
 	{
 		SudokuProcessor sudokuGrid = new SudokuProcessor();
-		
+		SudokuVertexNode temp = null;
 		// Create 9x9 grid and add 
-		// Row/Column edges
+		// N/S edges, and x-y coord
 		
 		// Rows
 		for (int x = 0; x < 9 ; x++)
@@ -14,19 +14,31 @@ public class Run
 			// Columns
 			for (int y = 0; y < 9; y++)
 			{
-				// Create Node and create Column edges
-				sudokuGrid.addEdges(sudokuGrid.getNode(x, y-1), sudokuGrid.add(x, y));				
+				SudokuVertexNode newNode = sudokuGrid.add(x, y);
+				
+				if 	(y == 0) // Node at "top" of the graph; This means the last
+							 // added node would be at the "bottom" of the graph in the
+							 // column before it, and THAT node should have south
+							 // node point to null, since there's none "below" it
+					temp.setSouth(null);
+				else
+					temp.setSouth(newNode);
+				
+				if (y == 0) // Node at the "top" of the graph; Should have north
+						  // node point to null, since there's none "above" it
+					newNode.setNorth(null);
+				else 
+					newNode.setNorth(temp);
+				
+				sudokuGrid.addNodeToSector(newNode);
+				temp = newNode;
 			}
 		}
 		
-		for (int y = 0; y < 9; y++)
-		{
-			for (int x = 0; x < 9; x++)
-				// Create row edges
-				sudokuGrid.addEdges(sudokuGrid.getNode(x-1, y), sudokuGrid.getNode(x, y));
-		}
+		// How to get east-west edges?
 		
-		// Create edges for 9-blocks
+		
 	}
 
 }
+
