@@ -1,44 +1,74 @@
-
-public class Run 
-{
-	public static void main(String[] args) 
-	{
-		SudokuProcessor sudokuGrid = new SudokuProcessor();
-		SudokuVertexNode temp = null;
-		// Create 9x9 grid and add 
+public class Run {
+	public static void main(String[] args) {
+		SudokuGrid sudokuGrid = new SudokuGrid();
+		
+		// Create 9x9 grid and add
 		// N/S edges, and x-y coord
-		
-		// Rows
-		for (int x = 0; x < 9 ; x++)
-		{
-			// Columns
-			for (int y = 0; y < 9; y++)
-			{
-				SudokuVertexNode newNode = sudokuGrid.add(x, y);
-				
-				if 	(y == 0) // Node at "top" of the graph; This means the last
-							 // added node would be at the "bottom" of the graph in the
-							 // column before it, and THAT node should have south
-							 // node point to null, since there's none "below" it
-					temp.setSouth(null);
-				else
-					temp.setSouth(newNode);
-				
-				if (y == 0) // Node at the "top" of the graph; Should have north
-						  // node point to null, since there's none "above" it
-					newNode.setNorth(null);
-				else 
-					newNode.setNorth(temp);
-				
-				sudokuGrid.addNodeToSector(newNode);
-				temp = newNode;
-			}
-		}
-		
-		// How to get east-west edges?
-		
-		
+
+		sudokuGrid = createGrid();		//This method needs to add edges to nodes. It currently doesn't.
+		sudokuGrid.printGrid();
+		//Implement rest of code
 	}
 
-}
+	private static SudokuGrid createGrid() {
+		SudokuVertexNode temp = null;
+		SudokuGrid gridToCreate = new SudokuGrid();
+		
+		// Columns
+		for (int y = 0; y < 9; y++) {
+			// Rows
+			for (int x = 0; x < 9; x++) {
+				SudokuVertexNode newNode = new SudokuVertexNode(x, y);
 
+				switch (x) {
+				case 0:
+					switch (y) {
+					case 0: // First node in grid
+							newNode.setNorth(null);	// Set everything null
+							newNode.setSouth(null);
+							newNode.setEast(null);
+							newNode.setWest(null);
+							break;
+
+					default: // First column in grid
+							temp = gridToCreate.getNode(x, y - 1); 	// Get node above
+							temp.setSouth(newNode); 				// Set South of above node
+							newNode.setNorth(temp); 				// Set North of current node
+							newNode.setSouth(null);
+							newNode.setEast(null);
+							newNode.setWest(null);
+							break;
+					}
+					break;
+				default:
+					switch (y) {
+					case 0: // First row in grid
+							temp = gridToCreate.getNode(x - 1, y);	// Get previous node
+							temp.setEast(newNode); 					// Set East of previous node
+							newNode.setNorth(null);
+							newNode.setSouth(null);
+							newNode.setEast(null);
+							newNode.setWest(temp); 					// Set West of current node
+							break;
+
+					default: // This sets nodes NOT in the paths (x, 0) or (0, y)
+							temp = gridToCreate.getNode(x - 1, y);	// Get previous node
+							temp.setEast(newNode); 					// Set East of previous node
+							newNode.setWest(temp); 					// Set West of current node
+
+							temp = gridToCreate.getNode(x, y - 1);	// Get node above
+							temp.setSouth(newNode); 				// Set South of above node
+							newNode.setNorth(temp); 				// Set North of current node
+
+							newNode.setSouth(null);
+							newNode.setEast(null);
+							break;
+					}
+					break;
+				}
+				gridToCreate.add(newNode); // Finally, add the node to the grid
+			}
+		}
+		return gridToCreate;
+	}
+}
