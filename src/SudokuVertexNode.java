@@ -8,14 +8,12 @@ public class SudokuVertexNode
 	
 	private Color color;
 	private int xRow, yCol;
-	private ArrayList<SudokuVertexNode> edges;
 	
 	public SudokuVertexNode(int v, int x, int y)
 	{
 		this.value = v;
 		this.xRow = x;
 		this.yCol = y;
-		edges = new ArrayList<SudokuVertexNode>();
 	}
 	
 	public SudokuVertexNode(int x, int y)
@@ -23,7 +21,6 @@ public class SudokuVertexNode
 		this.value = 0;
 		this.xRow = x;
 		this.yCol = y;
-		edges = new ArrayList<SudokuVertexNode>();
 	}
 	
 	public void setColor(Color c)
@@ -34,11 +31,6 @@ public class SudokuVertexNode
 	public Color getColor()
 	{
 		return this.color;
-	}
-	
-	public void addEdge(SudokuVertexNode n)
-	{
-		this.edges.add(n);
 	}
 	
 	public int[] getCoordinates()
