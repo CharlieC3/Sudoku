@@ -5,8 +5,8 @@ public class Run {
 		// Create 9x9 grid and add
 		// N/S edges, and x-y coord
 
-		sudokuGrid = createGrid();		//This method needs to add edges to nodes. It currently doesn't. <- did this at
-		//sudokuGrid.printGrid();		// node level, instead of method level. 
+		sudokuGrid = createGrid();		
+		//sudokuGrid.printGrid();		 
 		sudokuGrid.setTestData();
 		sudokuGrid.printGrid();
 		//Implement rest of code
