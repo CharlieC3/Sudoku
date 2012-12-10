@@ -110,6 +110,44 @@ public class SudokuGrid {
 		return this.getNode(0, 0);
 	}
 	
+	public void setTestData()
+	{
+		this.getNode(1,0).setValue(8);
+		this.getNode(5,0).setValue(5);
+		this.getNode(0,1).setValue(5);
+		this.getNode(5,1).setValue(2);
+		this.getNode(6,1).setValue(1);
+		this.getNode(7,1).setValue(9);
+		this.getNode(8,1).setValue(8);
+		this.getNode(0,2).setValue(2);
+		this.getNode(4,2).setValue(8);
+		this.getNode(7,2).setValue(4);
+		this.getNode(8,2).setValue(3);
+		this.getNode(0,3).setValue(8);
+		this.getNode(2,3).setValue(3);
+		this.getNode(4,3).setValue(1);
+		this.getNode(4,5).setValue(5);
+		this.getNode(6,5).setValue(6);
+		this.getNode(8,5).setValue(4);
+		this.getNode(0,6).setValue(6);
+		this.getNode(1,6).setValue(9);
+		this.getNode(4,6).setValue(3);
+		this.getNode(8,6).setValue(7);
+		this.getNode(0,7).setValue(7);
+		this.getNode(1,7).setValue(2);
+		this.getNode(2,7).setValue(4);
+		this.getNode(3,7).setValue(8);
+		this.getNode(8,7).setValue(5);
+		this.getNode(3,8).setValue(6);
+		this.getNode(7,8).setValue(8);
+		
+	}
+	
+	public void colorizeGrid()
+	{
+		
+	}
+	
 	public void printGrid()	{
 		System.out.println("********************SUDOKU GRID********************");
 		
