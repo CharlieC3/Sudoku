@@ -1,10 +1,9 @@
 import java.awt.Color;
-import java.util.ArrayList;
 
 public class SudokuVertexNode 
 {
 	private SudokuVertexNode north, south, east, west;
-	private int value;
+	private int value, sector;
 	
 	private Color color;
 	private int xRow, yCol;
@@ -87,6 +86,14 @@ public class SudokuVertexNode
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+
+	public int getSector() {
+		return sector;
+	}
+
+	public void setSector(int sector) {
+		this.sector = sector;
 	}
 	
 }

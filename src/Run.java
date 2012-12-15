@@ -5,10 +5,10 @@ public class Run {
 		// Create 9x9 grid and add
 		// N/S edges, and x-y coord
 
-		sudokuGrid = createGrid();		
-		//sudokuGrid.printGrid();		 
+		sudokuGrid = createGrid();			 
 		sudokuGrid.setTestData();
-		sudokuGrid.printGrid();
+		//sudokuGrid.printGrid();
+		sudokuGrid.solvePuzzle();
 		//Implement rest of code
 	}
 
