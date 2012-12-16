@@ -1,15 +1,23 @@
+import java.io.IOException;
+
 public class Run {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IndexOutOfBoundsException, IOException {
 		SudokuGrid sudokuGrid = new SudokuGrid();
-		
+		SudokuProcessor processor = null;
 		// Create 9x9 grid and add
 		// N/S edges, and x-y coord
 
 		sudokuGrid = createGrid();			 
 		sudokuGrid.setTestData();
-		//sudokuGrid.printGrid();
-		sudokuGrid.solvePuzzle();
-		//Implement rest of code
+		
+		processor = new SudokuProcessor(sudokuGrid);
+		sudokuGrid.printGrid();
+		
+		System.out.println("Thinking...\n");
+		
+		processor.solvePuzzle();		
+		sudokuGrid.printGrid();
+
 	}
 
 	private static SudokuGrid createGrid() {
