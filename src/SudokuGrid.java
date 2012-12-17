@@ -96,7 +96,7 @@ public class SudokuGrid {
 			}
 		}
 		prePopulateNodes();		// Populate some nodes with values
-		// to set up the puzzle
+								// to set up the puzzle
 	}
 	
 	public SudokuVertexNode getNode(int x, int y) {
@@ -106,7 +106,7 @@ public class SudokuGrid {
 			return nodeToReturn;
 		}
 		
-		//Searches the grid by starting at (0,0)
+		// Searches the grid by starting at (0,0)
 		for (int i = 0; i < x; i++) {
 			nodeToReturn = nodeToReturn.getEast();
 		}
@@ -210,17 +210,18 @@ public class SudokuGrid {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("Could not find sudoku_values.txt. Please make sure" +
+					" it is in Sudoku directory.");
+			System.exit(1);
 		} 
 	}
 	
 	public void printGrid()	{
 		
 		if (solved) {
-			System.out
-					.println("   SOLVED SUDOKU GRID");
+			System.out.println("   SOLVED SUDOKU GRID");
 		} else {
-			System.out
-					.println("  UNSOLVED SUDOKU GRID");
+			System.out.println("  UNSOLVED SUDOKU GRID");
 		}
 
 		for	(int x = 0, y = 0; y < 9; y++)	{
