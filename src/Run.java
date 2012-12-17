@@ -12,11 +12,9 @@ public class Run {
 	 */
 	public static void main(String[] args) throws Exception {
 		SudokuGrid sudokuGrid = new SudokuGrid();		// Create grid and pre-populate it
-		SudokuProcessor processor = null;
+		SudokuProcessor processor = new SudokuProcessor(sudokuGrid);
 		
-		processor = new SudokuProcessor(sudokuGrid);
-		sudokuGrid.printGrid();
-		
+		sudokuGrid.printGrid();		
 		processor.solvePuzzle();		
 		sudokuGrid.printGrid();
 		

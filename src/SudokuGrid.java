@@ -57,7 +57,7 @@ public class SudokuGrid {
 						break;
 						
 					default: // First column in grid
-						temp = this.getNode(x, y - 1); 	// Get node above
+						temp = getNode(x, y - 1); 		// Get node above
 						temp.setSouth(newNode); 		// Set South of above node
 						newNode.setNorth(temp); 		// Set North of current node
 						newNode.setSouth(null);
@@ -69,7 +69,7 @@ public class SudokuGrid {
 				default:
 					switch (y) {
 					case 0: // First row in grid
-						temp = this.getNode(x - 1, y);	// Get previous node
+						temp = getNode(x - 1, y);		// Get previous node
 						temp.setEast(newNode); 			// Set East of previous node
 						newNode.setNorth(null);
 						newNode.setSouth(null);
@@ -78,11 +78,11 @@ public class SudokuGrid {
 						break;
 						
 					default: // This sets nodes NOT in the paths (x, 0) or (0, y)
-						temp = this.getNode(x - 1, y);	// Get previous node
+						temp = getNode(x - 1, y);		// Get previous node
 						temp.setEast(newNode); 			// Set East of previous node
 						newNode.setWest(temp); 			// Set West of current node
 						
-						temp = this.getNode(x, y - 1);	// Get node above
+						temp = getNode(x, y - 1);		// Get node above
 						temp.setSouth(newNode); 		// Set South of above node
 						newNode.setNorth(temp); 		// Set North of current node
 						
@@ -92,7 +92,7 @@ public class SudokuGrid {
 					}
 					break;
 				}
-				this.add(newNode); // Finally, add the node to the grid
+				add(newNode); // Finally, add the node to the grid
 			}
 		}
 		prePopulateNodes();		// Populate some nodes with values
@@ -127,13 +127,13 @@ public class SudokuGrid {
 			switch(y) {
 				case 0: case 1: case 2: nodeToAdd.setSector(1);
 										sector1.add(nodeToAdd); 
-					break;
+										break;
 				case 3: case 4: case 5: nodeToAdd.setSector(4);
 										sector4.add(nodeToAdd); 
-					break;
+										break;
 				case 6: case 7: case 8: nodeToAdd.setSector(7);
 										sector7.add(nodeToAdd); 
-					break;
+										break;
 			}
 			break;
 			
@@ -199,7 +199,7 @@ public class SudokuGrid {
 								.read());
 					} while (currentValue == -1);
 					
-						this.getNode(x, y).setValue(currentValue);
+						getNode(x, y).setValue(currentValue);
 				}
 			}
 
@@ -234,11 +234,11 @@ public class SudokuGrid {
 					System.out.print("| ");
 				}
 				switch (x){
-					case 0:  System.out.print(this.getNode(x, y).getValue() + " ");
+					case 0:  System.out.print(getNode(x, y).getValue() + " ");
 							 break;
-					case 8:  System.out.print(this.getNode(x, y).getValue());
+					case 8:  System.out.print(getNode(x, y).getValue());
 							 break;
-					default: System.out.print(this.getNode(x, y).getValue() + " ");
+					default: System.out.print(getNode(x, y).getValue() + " ");
 							 break;
 				}
 			}

@@ -8,7 +8,6 @@ import java.util.Iterator;
  */
 public class SudokuProcessor {
 	private SudokuGrid sudokuGrid;
-	int iterator = 0;
 	
 	/**
 	 * Grid to use is passed in when the processor object is created.
@@ -129,7 +128,6 @@ public class SudokuProcessor {
 		}
 		return true; 	// No match was found, valueToCheck is
 						// a possible candidate to be injected
-
 	}
 	
 	/**
