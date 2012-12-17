@@ -58,8 +58,8 @@ public class SudokuGrid {
 						
 					default: // First column in grid
 						temp = this.getNode(x, y - 1); 	// Get node above
-						temp.setSouth(newNode); 				// Set South of above node
-						newNode.setNorth(temp); 				// Set North of current node
+						temp.setSouth(newNode); 		// Set South of above node
+						newNode.setNorth(temp); 		// Set North of current node
 						newNode.setSouth(null);
 						newNode.setEast(null);
 						newNode.setWest(null);
@@ -70,21 +70,21 @@ public class SudokuGrid {
 					switch (y) {
 					case 0: // First row in grid
 						temp = this.getNode(x - 1, y);	// Get previous node
-						temp.setEast(newNode); 					// Set East of previous node
+						temp.setEast(newNode); 			// Set East of previous node
 						newNode.setNorth(null);
 						newNode.setSouth(null);
 						newNode.setEast(null);
-						newNode.setWest(temp); 					// Set West of current node
+						newNode.setWest(temp); 			// Set West of current node
 						break;
 						
 					default: // This sets nodes NOT in the paths (x, 0) or (0, y)
 						temp = this.getNode(x - 1, y);	// Get previous node
-						temp.setEast(newNode); 					// Set East of previous node
-						newNode.setWest(temp); 					// Set West of current node
+						temp.setEast(newNode); 			// Set East of previous node
+						newNode.setWest(temp); 			// Set West of current node
 						
 						temp = this.getNode(x, y - 1);	// Get node above
-						temp.setSouth(newNode); 				// Set South of above node
-						newNode.setNorth(temp); 				// Set North of current node
+						temp.setSouth(newNode); 		// Set South of above node
+						newNode.setNorth(temp); 		// Set North of current node
 						
 						newNode.setSouth(null);
 						newNode.setEast(null);
@@ -141,13 +141,13 @@ public class SudokuGrid {
 			switch(y) {
 				case 0: case 1: case 2: nodeToAdd.setSector(2);
 										sector2.add(nodeToAdd); 
-					break;
+										break;
 				case 3: case 4: case 5: nodeToAdd.setSector(5);
 										sector5.add(nodeToAdd); 
-					break;
+										break;
 				case 6: case 7: case 8: nodeToAdd.setSector(8);
 										sector8.add(nodeToAdd); 
-					break;
+										break;
 			}
 			break;
 			
@@ -155,13 +155,13 @@ public class SudokuGrid {
 			switch(y) {
 				case 0: case 1: case 2: nodeToAdd.setSector(3);
 										sector3.add(nodeToAdd); 
-					break;
+										break;
 				case 3: case 4: case 5: nodeToAdd.setSector(6);
 										sector6.add(nodeToAdd); 
-					break;
+										break;
 				case 6: case 7: case 8: nodeToAdd.setSector(9);
 										sector9.add(nodeToAdd); 
-					break;
+										break;
 			}
 			break;
 		}
@@ -180,10 +180,6 @@ public class SudokuGrid {
 	public void add(SudokuVertexNode nodeToAdd) {
 		addNodeToSector(nodeToAdd);
 		vertices++;
-	}
-	
-	public SudokuVertexNode getFirst()	{
-		return this.getNode(0, 0);
 	}
 	
 	public void prePopulateNodes() throws IOException {
