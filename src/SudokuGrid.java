@@ -102,7 +102,7 @@ public class SudokuGrid {
 	public SudokuVertexNode getNode(int x, int y) {
 		SudokuVertexNode nodeToReturn = sector1.get(0);
 		
-		if (x ==0 & y == 0){
+		if (x == 0 & y == 0){
 			return nodeToReturn;
 		}
 		
@@ -205,7 +205,6 @@ public class SudokuGrid {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
 			System.out.println("Could not find sudoku_values.txt. Please make sure" +
 					" it is in Sudoku directory.");
 			System.exit(1);
@@ -217,7 +216,7 @@ public class SudokuGrid {
 		if (solved) {
 			System.out.println("   SOLVED SUDOKU GRID");
 		} else {
-			System.out.println("  UNSOLVED SUDOKU GRID");
+			System.out.println("\n  UNSOLVED SUDOKU GRID");
 		}
 
 		for	(int x = 0, y = 0; y < 9; y++)	{
