@@ -1,6 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +20,7 @@ public class SudokuGrid {
 			sector5, sector6, sector7, sector8, sector9;
 	private boolean solved = false;
 	
-	public SudokuGrid() throws IOException	{
+	public SudokuGrid() throws Exception	{
 		initilizeSectors();
 		createGrid();
 	}
@@ -37,7 +37,7 @@ public class SudokuGrid {
 		sector9 = new ArrayList<SudokuVertexNode>();
 	}
 	
-	private void createGrid() throws IOException {
+	private void createGrid() throws Exception {
 		SudokuVertexNode temp = null;
 		
 		// Columns
@@ -182,14 +182,13 @@ public class SudokuGrid {
 		vertices++;
 	}
 	
-	public void prePopulateNodes() throws IOException {
+	public void prePopulateNodes() throws Exception {
 
 		BufferedReader sudokuValues = null;
 		 
 		try {
 
 			int currentValue;
-
 			sudokuValues = new BufferedReader(new FileReader(
 					"sudoku_values.txt"));
 			for (int x = 0, y = 0; y < 9; y++) {
@@ -204,11 +203,16 @@ public class SudokuGrid {
 				}
 			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("Could not find sudoku_values.txt. Please make sure" +
-					" it is in Sudoku directory.");
-			System.exit(1);
-		} 
+					" it is in Sudoku directory.\n\nWould you like to continue without" +
+					" pre-populated values? (Y/N)");
+			
+			sudokuValues = new BufferedReader(new InputStreamReader(System.in));
+			if (!sudokuValues.readLine().toLowerCase().equals("y"))	{
+				System.exit(1);
+			}
+		}
 	}
 	
 	public void printGrid()	{

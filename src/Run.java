@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 /**
  * 
  * @author Rachael, Charlie
@@ -10,10 +8,9 @@ public class Run {
 	/**
 	 * Creates a 9x9 grid, pre-populates the nodes with data, then solves the puzzle.
 	 * @param args
-	 * @throws IndexOutOfBoundsException
-	 * @throws IOException
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws IndexOutOfBoundsException, IOException {
+	public static void main(String[] args) throws Exception {
 		SudokuGrid sudokuGrid = new SudokuGrid();		// Create grid and pre-populate it
 		SudokuProcessor processor = null;
 		
