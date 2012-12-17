@@ -20,6 +20,12 @@ public class SudokuGrid {
 			sector5, sector6, sector7, sector8, sector9;
 	private boolean solved = false;
 	
+	public SudokuGrid() throws IOException	{
+		initilizeSectors();
+		
+		createGrid();
+	}
+	
 	public boolean isSolved() {
 		return solved;
 	}
@@ -28,9 +34,6 @@ public class SudokuGrid {
 		this.solved = solved;
 	}
 
-	public SudokuGrid()	{
-		initilizeSectors();
-	}
 	
 	public void initilizeSectors() {
 		sector1 = new ArrayList<SudokuVertexNode>();
@@ -132,7 +135,7 @@ public class SudokuGrid {
 		return this.getNode(0, 0);
 	}
 	
-	public void setTestData() throws IOException {
+	public void prePopulateNodes() throws IOException {
 
 		BufferedReader sudokuValues = null;
 		 
@@ -163,26 +166,34 @@ public class SudokuGrid {
 		
 		if (solved) {
 			System.out
-					.println("*****************SOLVED SUDOKU GRID*****************");
+					.println("   SOLVED SUDOKU GRID");
 		} else {
 			System.out
-					.println("****************UNSOLVED SUDOKU GRID****************");
+					.println("  UNSOLVED SUDOKU GRID");
 		}
 
 		for	(int x = 0, y = 0; y < 9; y++)	{
 			x = 0;
-			for (; x < 9; x++){
+			if ((y % 3) == 0)	{
+				System.out.println("------------------------");
+			}
+			for (; x < 9; x++)	{
+				
+				if ((x % 3) == 0)	{
+					System.out.print("| ");
+				}
 				switch (x){
-					case 0:  System.out.print("\t     " + this.getNode(x, y).getValue() + "  ");
+					case 0:  System.out.print(this.getNode(x, y).getValue() + " ");
 							 break;
-					case 8:  System.out.println(this.getNode(x, y).getValue());
+					case 8:  System.out.print(this.getNode(x, y).getValue());
 							 break;
-					default: System.out.print(this.getNode(x, y).getValue() + "  ");
+					default: System.out.print(this.getNode(x, y).getValue() + " ");
 							 break;
 				}
 			}
+			System.out.println(" |");
 		}
-		System.out.println("\n");
+		System.out.println("------------------------\n\n");
 	}
 	
 	public ArrayList<SudokuVertexNode> getSector(int sector)	{
@@ -201,5 +212,67 @@ public class SudokuGrid {
 					 System.exit(1);
 		}
 		return null;
+	}
+	
+	private void createGrid() throws IOException {
+		SudokuVertexNode temp = null;
+		
+		// Columns
+		for (int y = 0; y < 9; y++) {
+			// Rows
+			for (int x = 0; x < 9; x++) {
+				SudokuVertexNode newNode = new SudokuVertexNode(x, y);
+
+				switch (x) {
+				case 0:
+					switch (y) {
+					case 0: // First node in grid
+							newNode.setNorth(null);	// Set everything null
+							newNode.setSouth(null);
+							newNode.setEast(null);
+							newNode.setWest(null);
+							break;
+
+					default: // First column in grid
+							temp = this.getNode(x, y - 1); 	// Get node above
+							temp.setSouth(newNode); 				// Set South of above node
+							newNode.setNorth(temp); 				// Set North of current node
+							newNode.setSouth(null);
+							newNode.setEast(null);
+							newNode.setWest(null);
+							break;
+					}
+					break;
+				default:
+					switch (y) {
+					case 0: // First row in grid
+							temp = this.getNode(x - 1, y);	// Get previous node
+							temp.setEast(newNode); 					// Set East of previous node
+							newNode.setNorth(null);
+							newNode.setSouth(null);
+							newNode.setEast(null);
+							newNode.setWest(temp); 					// Set West of current node
+							break;
+
+					default: // This sets nodes NOT in the paths (x, 0) or (0, y)
+							temp = this.getNode(x - 1, y);	// Get previous node
+							temp.setEast(newNode); 					// Set East of previous node
+							newNode.setWest(temp); 					// Set West of current node
+
+							temp = this.getNode(x, y - 1);	// Get node above
+							temp.setSouth(newNode); 				// Set South of above node
+							newNode.setNorth(temp); 				// Set North of current node
+
+							newNode.setSouth(null);
+							newNode.setEast(null);
+							break;
+					}
+					break;
+				}
+				this.add(newNode); // Finally, add the node to the grid
+			}
+		}
+		prePopulateNodes();		// Populate some nodes with values
+								// to set up the puzzle
 	}
 }

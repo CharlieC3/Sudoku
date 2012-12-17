@@ -45,30 +45,28 @@ public class SudokuProcessor {
 	private boolean solveWithRecursion(int x, int y) throws IOException {
 		int valueOfCurrentNode;
 
-		if (x == 9) {			//If the end of the grid has been reached
-			x = 0;				//reset x and increment y
+		if (x == 9) {			// If the end of the grid has been reached
+			x = 0;				// reset x and increment y
 			if (++y == 9) {
 				return true;
 			}
 		}
 
-		valueOfCurrentNode = sudokuGrid.getNode(x, y).getValue(); //Get value of currently selected Node
+		valueOfCurrentNode = sudokuGrid.getNode(x, y).getValue(); // Get value of currently selected Node
 
-		if (valueOfCurrentNode != 0) { 				//If a node with a pre-filled value of 0 is found,
-			return solveWithRecursion(x + 1, y);	//System.out.println("x = " + x + "y = " + y);
-			 										//find out what value can be injected and inject it
+		if (valueOfCurrentNode != 0) { 				// If a node with a pre-filled value of 0 is found,
+			return solveWithRecursion(x + 1, y);	// System.out.println("x = " + x + "y = " + y);
+			 										// find out what value can be injected and inject it
 		}
 		
 		for (int valueToInject = 1; valueToInject <= 9; ++valueToInject) {
-			//System.out.println("Iterations = " + ++iterator);
-
-			if (checkValueToInject(x, y, valueToInject)) { 			//If the valueToBeInjected is valid
-				sudokuGrid.getNode(x, y).setValue(valueToInject); 	//inject it into the Node
-				if (solveWithRecursion(x + 1, y)) {					//Then recursively call this method
-					return true;									//with the next x value
+			if (checkValueToInject(x, y, valueToInject)) { 			// If the valueToBeInjected is valid
+				sudokuGrid.getNode(x, y).setValue(valueToInject); 	// inject it into the Node
+				if (solveWithRecursion(x + 1, y)) {					// Then recursively call this method
+					return true;									// with the next x value
 				}
 			}
-		} //End of For loop
+		} // End of For loop
 		sudokuGrid.getNode(x, y).setValue(0);
 		return false;
 	}
@@ -83,14 +81,14 @@ public class SudokuProcessor {
 	 * @return
 	 */
 	private boolean checkValueToInject(int x, int y, int valueToCheck) {
-		if (checkRow(valueToCheck, x, y) != 0) { 			//Checks the row for matching values. If a matching value
-															//is found, further methods are not called with this value
-															//to save cycles
-			if (checkColumn(valueToCheck, x, y) != 0) { 	//Checks the column for matching values. If a matching value
-															//is found, the sector is not checked with this value
-															//to save cycles
+		if (checkRow(valueToCheck, x, y) != 0) { 			// Checks the row for matching values. If a matching value
+															// is found, further methods are not called with this value
+															// to save cycles
+			if (checkColumn(valueToCheck, x, y) != 0) { 	// Checks the column for matching values. If a matching value
+															// is found, the sector is not checked with this value
+															// to save cycles
 				if (checkSector(valueToCheck, x, y) != 0) {
-					return true; 					//Return valueToCheck to be injected
+					return true; 					// Return valueToCheck to be injected
 				}
 			}
 		}
@@ -107,7 +105,7 @@ public class SudokuProcessor {
 	private int checkRow(int valueToCheck, int X, int Y) {
 		for (int x = 0; x < 9; x++) {
 			if (sudokuGrid.getNode(x, Y).getValue() == valueToCheck) {
-				return 0;		//Return 0 if the value already exists in the row
+				return 0;		// Return 0 if the value already exists in the row
 			}
 		}
 		return valueToCheck; 	// No match was found, meaning the valueToCheck is
@@ -125,7 +123,7 @@ public class SudokuProcessor {
 		// Check the column for the passed in valueToCheck
 		for (int y = 0; y < 9; y++) {
 			if (sudokuGrid.getNode(X, y).getValue() == valueToCheck) {
-				return 0;		//Return 0 if the value already exists in the column
+				return 0;		// Return 0 if the value already exists in the column
 			}
 		}
 		return valueToCheck; 	// No match was found, meaning the valueToCheck is
@@ -166,11 +164,11 @@ public class SudokuProcessor {
 		default:	throw new IndexOutOfBoundsException("Error: Could not find specified index of " + sectorToCheck);
 		}
 		
-		//Check all nodes in the sector
+		// Check all nodes in the sector
 		while (sectorToCheck.hasNext())	{
 			SudokuVertexNode nodeToCheck = sectorToCheck.next();
 			if (nodeToCheck.getValue() == valueToCheck)	{
-				return 0;		//Return 0 if the value already exists in the sector
+				return 0;		// Return 0 if the value already exists in the sector
 			}
 		}
 		
