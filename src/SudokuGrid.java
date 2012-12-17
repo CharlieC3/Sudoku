@@ -22,18 +22,8 @@ public class SudokuGrid {
 	
 	public SudokuGrid() throws IOException	{
 		initilizeSectors();
-		
 		createGrid();
 	}
-	
-	public boolean isSolved() {
-		return solved;
-	}
-
-	public void setSolved(boolean solved) {
-		this.solved = solved;
-	}
-
 	
 	public void initilizeSectors() {
 		sector1 = new ArrayList<SudokuVertexNode>();
@@ -46,7 +36,88 @@ public class SudokuGrid {
 		sector8 = new ArrayList<SudokuVertexNode>();
 		sector9 = new ArrayList<SudokuVertexNode>();
 	}
-
+	
+	private void createGrid() throws IOException {
+		SudokuVertexNode temp = null;
+		
+		// Columns
+		for (int y = 0; y < 9; y++) {
+			// Rows
+			for (int x = 0; x < 9; x++) {
+				SudokuVertexNode newNode = new SudokuVertexNode(x, y);
+				
+				switch (x) {
+				case 0:
+					switch (y) {
+					case 0: // First node in grid
+						newNode.setNorth(null);	// Set everything null
+						newNode.setSouth(null);
+						newNode.setEast(null);
+						newNode.setWest(null);
+						break;
+						
+					default: // First column in grid
+						temp = this.getNode(x, y - 1); 	// Get node above
+						temp.setSouth(newNode); 				// Set South of above node
+						newNode.setNorth(temp); 				// Set North of current node
+						newNode.setSouth(null);
+						newNode.setEast(null);
+						newNode.setWest(null);
+						break;
+					}
+					break;
+				default:
+					switch (y) {
+					case 0: // First row in grid
+						temp = this.getNode(x - 1, y);	// Get previous node
+						temp.setEast(newNode); 					// Set East of previous node
+						newNode.setNorth(null);
+						newNode.setSouth(null);
+						newNode.setEast(null);
+						newNode.setWest(temp); 					// Set West of current node
+						break;
+						
+					default: // This sets nodes NOT in the paths (x, 0) or (0, y)
+						temp = this.getNode(x - 1, y);	// Get previous node
+						temp.setEast(newNode); 					// Set East of previous node
+						newNode.setWest(temp); 					// Set West of current node
+						
+						temp = this.getNode(x, y - 1);	// Get node above
+						temp.setSouth(newNode); 				// Set South of above node
+						newNode.setNorth(temp); 				// Set North of current node
+						
+						newNode.setSouth(null);
+						newNode.setEast(null);
+						break;
+					}
+					break;
+				}
+				this.add(newNode); // Finally, add the node to the grid
+			}
+		}
+		prePopulateNodes();		// Populate some nodes with values
+		// to set up the puzzle
+	}
+	
+	public SudokuVertexNode getNode(int x, int y) {
+		SudokuVertexNode nodeToReturn = sector1.get(0);
+		
+		if (x ==0 & y == 0){
+			return nodeToReturn;
+		}
+		
+		//Searches the grid by starting at (0,0)
+		for (int i = 0; i < x; i++) {
+			nodeToReturn = nodeToReturn.getEast();
+		}
+		
+		for (int k = 0; k < y; k++) {
+			nodeToReturn = nodeToReturn.getSouth();
+		}
+		
+		return nodeToReturn;
+	}
+	
 	public void addNodeToSector(SudokuVertexNode nodeToAdd) {
 		int x = nodeToAdd.getX();
 		int y = nodeToAdd.getY();
@@ -98,26 +169,6 @@ public class SudokuGrid {
 
 	public int numVertices() {
 		return vertices;
-	}
-
-	public SudokuVertexNode getNode(int x, int y) {
-		SudokuVertexNode nodeToReturn = sector1.get(0);
-		
-		if (x ==0 & y == 0){
-			return nodeToReturn;
-		}
-		
-		//Searches the grid by starting at (0,0)
-		for (int i = 0; i < x; i++) {
-			nodeToReturn = nodeToReturn.getEast();
-		}
-		
-		for (int k = 0; k < y; k++) {
-			nodeToReturn = nodeToReturn.getSouth();
-		}
-		
-		
-		return nodeToReturn;
 	}
 
 	/**
@@ -175,7 +226,7 @@ public class SudokuGrid {
 		for	(int x = 0, y = 0; y < 9; y++)	{
 			x = 0;
 			if ((y % 3) == 0)	{
-				System.out.println("------------------------");
+				System.out.println("-------------------------");
 			}
 			for (; x < 9; x++)	{
 				
@@ -193,7 +244,7 @@ public class SudokuGrid {
 			}
 			System.out.println(" |");
 		}
-		System.out.println("------------------------\n\n");
+		System.out.println("-------------------------\n\n");
 	}
 	
 	public ArrayList<SudokuVertexNode> getSector(int sector)	{
@@ -214,65 +265,11 @@ public class SudokuGrid {
 		return null;
 	}
 	
-	private void createGrid() throws IOException {
-		SudokuVertexNode temp = null;
-		
-		// Columns
-		for (int y = 0; y < 9; y++) {
-			// Rows
-			for (int x = 0; x < 9; x++) {
-				SudokuVertexNode newNode = new SudokuVertexNode(x, y);
+	public boolean isSolved() {
+		return solved;
+	}
 
-				switch (x) {
-				case 0:
-					switch (y) {
-					case 0: // First node in grid
-							newNode.setNorth(null);	// Set everything null
-							newNode.setSouth(null);
-							newNode.setEast(null);
-							newNode.setWest(null);
-							break;
-
-					default: // First column in grid
-							temp = this.getNode(x, y - 1); 	// Get node above
-							temp.setSouth(newNode); 				// Set South of above node
-							newNode.setNorth(temp); 				// Set North of current node
-							newNode.setSouth(null);
-							newNode.setEast(null);
-							newNode.setWest(null);
-							break;
-					}
-					break;
-				default:
-					switch (y) {
-					case 0: // First row in grid
-							temp = this.getNode(x - 1, y);	// Get previous node
-							temp.setEast(newNode); 					// Set East of previous node
-							newNode.setNorth(null);
-							newNode.setSouth(null);
-							newNode.setEast(null);
-							newNode.setWest(temp); 					// Set West of current node
-							break;
-
-					default: // This sets nodes NOT in the paths (x, 0) or (0, y)
-							temp = this.getNode(x - 1, y);	// Get previous node
-							temp.setEast(newNode); 					// Set East of previous node
-							newNode.setWest(temp); 					// Set West of current node
-
-							temp = this.getNode(x, y - 1);	// Get node above
-							temp.setSouth(newNode); 				// Set South of above node
-							newNode.setNorth(temp); 				// Set North of current node
-
-							newNode.setSouth(null);
-							newNode.setEast(null);
-							break;
-					}
-					break;
-				}
-				this.add(newNode); // Finally, add the node to the grid
-			}
-		}
-		prePopulateNodes();		// Populate some nodes with values
-								// to set up the puzzle
+	public void setSolved(boolean solved) {
+		this.solved = solved;
 	}
 }
