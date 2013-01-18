@@ -102,7 +102,7 @@ public class SudokuGrid {
 	public SudokuVertexNode getNode(int x, int y) {
 		SudokuVertexNode nodeToReturn = sector1.get(0);
 		
-		if (x == 0 & y == 0){
+		if ((x == 0) && (y == 0)){
 			return nodeToReturn;
 		}
 		
